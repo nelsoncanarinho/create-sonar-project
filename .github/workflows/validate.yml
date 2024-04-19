@@ -9,8 +9,19 @@ jobs:
       - name: Git pull
         if: ${{ github.ref == 'refs/heads/main' }}
         run: git pull
+        
+      - name: set vars
+        run: |
+          SONAR_ORGANIZATION=${{ github.event.repository.organization }}
+          SONAR_ORGANIZATION=${SONAR_ORGANIZATION,,} # lowercase it
+          echo "SONAR_ORGANIZATION=$SONAR_ORGANIZATION" >> $GITHUB_ENV
+          echo "SONAR_PROJECT_KEY=${SONAR_ORGANIZATION}_${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "SONAR_ORGANIZATION: $SONAR_ORGANIZATION"
+          echo "SONAR_PROJECT_KEY: $SONAR_PROJECT_KEY"
 
       - name: Validate Action
         uses: ./
         with:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ env.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ env.SONAR_ORGANIZATION }}         

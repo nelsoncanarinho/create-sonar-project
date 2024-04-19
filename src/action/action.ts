@@ -1,24 +1,25 @@
 import * as core from '@actions/core';
 import ApiClient from '../api/api-client';
-import { ActionOutputKeys } from './types';
+import { ActionInputs, ActionOutputKeys } from './types';
 import { buildCreateProjectParams, getInputs } from './utils';
+import { CreateProjectParams, GetProjectsByProjectKeyResponse, Project } from '../api/types';
 
 export async function run() {
   try {
-    const inputs = getInputs();
+    const inputs: ActionInputs = getInputs();
 
-    const api = new ApiClient(inputs.sonarToken);
-    const createProjectParams = buildCreateProjectParams(inputs);
+    const api: ApiClient = new ApiClient(inputs.sonarToken);
+    const createProjectParams: CreateProjectParams = buildCreateProjectParams(inputs);
 
-    const getProjectResponse = await api.getProjectByProjectKey({
+    const getProjectResponse: GetProjectsByProjectKeyResponse = await api.getProjectByProjectKey({
       organization: createProjectParams.organization,
       projects: [createProjectParams.project],
     });
 
-    const projectExists = getProjectResponse.components.find(
-      item => item.key === createProjectParams.project
+    const projectExists: Project & { lastAnalysisDate: Date; revision: string } | undefined = getProjectResponse.components.find(
+      (item: Project & { lastAnalysisDate: Date; revision: string }) => item.key === createProjectParams.project
     );
-
+    
     if (projectExists) {
       core.setOutput(ActionOutputKeys.organization, projectExists.organization);
       core.setOutput(ActionOutputKeys.projectKey, projectExists.key);
