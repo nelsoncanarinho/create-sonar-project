@@ -3,6 +3,7 @@ export const API_CONFIG = {
   PATHS: {
     PROJECTS: '/projects',
     BRANCHES: '/project_branches',
+    SETTINGS: '/settings',
   },
 } as const;
 
@@ -41,4 +42,10 @@ export type GetProjectsByProjectKeyResponse = {
 export interface PostBranchRenameParams {
   name: string;
   project: string;
+}
+
+export interface PostLongLivedBranchesParams {
+  key: string,
+  value: string,
+  component: string
 }

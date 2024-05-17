@@ -1,4 +1,5 @@
 export interface ActionInputs {
+  longLivedBranchRegex: string;
   sonarToken: string;
   project: string;
   organization: string;
@@ -12,6 +13,7 @@ export enum ActionInputKeys {
   organization = 'SONAR_ORGANIZATION',
   projectName = 'SONAR_PROJECT_NAME',
   mainBranch = 'SONAR_DEFAULT_BRANCH',
+  longLivedBranchRegex = 'LONG_LIVED_BRANCH_REGEX'
 }
 
 export enum ActionOutputKeys {

@@ -1,8 +1,14 @@
+import { AxiosResponse } from 'axios';
 import * as core from '@actions/core';
 import ApiClient from '../api/api-client';
 import { ActionInputs, ActionOutputKeys } from './types';
-import { buildCreateProjectParams, getInputs } from './utils';
-import { CreateProjectParams, GetProjectsByProjectKeyResponse, Project } from '../api/types';
+import { buildCreateProjectParams, buildLovedLivedBranchesParams, getInputs } from './utils';
+import {
+  CreateProjectParams,
+  GetProjectsByProjectKeyResponse,
+  PostLongLivedBranchesParams,
+  Project,
+} from '../api/types';
 
 export async function run() {
   try {
@@ -41,10 +47,18 @@ export async function run() {
       });
     }
 
+    if (inputs.longLivedBranchRegex.length > 1) {
+      const postLongLivedBranchesParams: PostLongLivedBranchesParams = buildLovedLivedBranchesParams(inputs);
+      const response: AxiosResponse = await api.setLongLivedBranches(postLongLivedBranchesParams);
+      if (response.status)
+        core.notice(`Set Long Lived branch name regex to "${inputs.longLivedBranchRegex}".`);
+    }
+
     core.setOutput(
       ActionOutputKeys.organization,
       createProjectParams.organization
     );
+
     core.setOutput(ActionOutputKeys.projectKey, project.key);
 
     return core.ExitCode.Success;

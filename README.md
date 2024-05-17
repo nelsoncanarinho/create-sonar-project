@@ -82,6 +82,9 @@ SONAR_DEFAULT_BRANCH:
 SONAR_TOKEN:
   description: 'Sonar token used to integrate with SonarCloud api.'
   required: true
+LONG_LIVED_BRANCH_REGEX:
+  description: 'Regex pattern to set the name of the long lived branches. Defaults to "{branch|release)-.*"'
+  required: false
 ```
 
 ## Action Outputs
@@ -89,6 +92,6 @@ SONAR_TOKEN:
 ```yml
  SONAR_ORGANIZATION:
     description: 'Sonar organization for the created project'
-  SONAR_PROJECT_KEY:
+SONAR_PROJECT_KEY:
     description: 'Sonar project key for the created project'
 ```
