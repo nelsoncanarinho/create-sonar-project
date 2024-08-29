@@ -9,11 +9,12 @@ export function getInputs(): ActionInputs {
     required: true,
   });
 
-  const project: string = core.getInput(ActionInputKeys.project) || '';
-  const organization: string = core.getInput(ActionInputKeys.organization) || '';
-  const projectName: string = core.getInput(ActionInputKeys.projectName) || '';
-  const mainBranch: string = core.getInput(ActionInputKeys.mainBranch) || 'main';
-  const longLivedBranchRegex: string = core.getInput(ActionInputKeys.longLivedBranchRegex) || '';
+  const { repo } = github.context;
+  const organization: string = core.getInput(ActionInputKeys.organization) ?? repo.owner;
+  const projectName: string = core.getInput(ActionInputKeys.projectName) ?? repo.repo;
+  const project: string = core.getInput(ActionInputKeys.project) ?? `${organization}_${projectName}`;
+  const mainBranch: string = core.getInput(ActionInputKeys.mainBranch) ?? 'main';
+  const longLivedBranchRegex: string = core.getInput(ActionInputKeys.longLivedBranchRegex) ?? '';
 
   return { sonarToken, project, organization, projectName, mainBranch, longLivedBranchRegex };
 }
@@ -22,18 +23,18 @@ export function buildCreateProjectParams(
   inputs: ActionInputs
 ): CreateProjectParams {
   const { repo } = github.context;
-  const project = inputs.project || repo.repo;
-  const name = inputs.projectName || repo.repo;
-  const organization = inputs.organization || repo.owner;
 
+  const organization = inputs.organization || repo.owner;
+  const name = inputs.projectName || repo.repo;
+  const project = inputs.project || `${organization}_${name}`;
+  
   return { name, organization, project };
 }
 
 export function buildLovedLivedBranchesParams(
   inputs: ActionInputs,
 ): PostLongLivedBranchesParams {
-  const { repo } = github.context;
-  const component: string = inputs.project || repo.repo;
+  const component: string = inputs.project ?? `${inputs.organization}_${inputs.projectName}`;
   const key = 'sonar.branch.longLivedBranches.regex';
   const value: string = inputs.longLivedBranchRegex;
 
