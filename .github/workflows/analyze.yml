@@ -25,7 +25,7 @@ jobs:
 
       - name: Create Project
         id: createProject
-        uses: ./action.yml
+        uses: ./
         with:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECT_KEY: donaldfoss-scc_setup-sonar-action
