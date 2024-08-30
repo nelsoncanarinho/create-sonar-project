@@ -26,5 +26,5 @@ outputs:
   SONAR_PROJECT_KEY:
     description: 'Sonar project key for the created project'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

@@ -18,9 +18,12 @@ jobs:
           node-version: '>=20'
           cache: 'pnpm'
 
+      - name: Install dependencies
+        run: npm install -g pnpm
+
       - name: Create Project
         id: createProject
-        uses: ./
+        uses: ./action.yml
         with:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECT_KEY: donaldfoss-scc_setup-sonar-action
