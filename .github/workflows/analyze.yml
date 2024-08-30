@@ -9,8 +9,14 @@ jobs:
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
+      
+      #      - uses: ./.github/actions/setup-node
 
-      - uses: ./.github/actions/setup-node
+      - name: Install node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '>=20'
+          cache: 'pnpm'
 
       - name: Create Project
         id: createProject
