@@ -6,6 +6,7 @@ import {
   GetProjectsByProjectKeyParams,
   GetProjectsByProjectKeyResponse,
   PostBranchRenameParams,
+  SetAdminPermissionsParams,
 } from './types';
 
 export default class ApiClient {
@@ -40,6 +41,17 @@ export default class ApiClient {
   async renameMasterBranch(params: PostBranchRenameParams) {
     return this.httpClient.post(`${API_CONFIG.PATHS.BRANCHES}/rename`, '', {
       params,
+    });
+  }
+
+  async setAdminPermissions(params: SetAdminPermissionsParams) {
+    return this.httpClient.post(`${API_CONFIG.PATHS.PERMISSIONS}/add_group`, '', {
+      params: {
+        projectKey: params.project,
+        organization: params.organization,
+        groupName: params.groupName,
+        permission: 'admin',
+      },
     });
   }
 }
