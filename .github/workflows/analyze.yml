@@ -21,15 +21,3 @@ jobs:
       - name: Run tests
         run: |
           npm install && npm run test:coverage
-
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        with:
-          args: >
-            -Dsonar.organization=${{steps.createProject.outputs.SONAR_ORGANIZATION}}
-            -Dsonar.projectKey=${{steps.createProject.outputs.SONAR_PROJECT_KEY}}
-            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-            -Dsonar.qualitygate.wait=true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
