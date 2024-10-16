@@ -41,25 +41,13 @@ export async function run() {
     }
 
     if (inputs.adminGroup) {
-      core.info(`Checking if group ${inputs.adminGroup} exists...`);
-
-      const groupExists = await api.groupExists({
+      await api.setAdminPermissions({
+        project: project.key,
         organization: createProjectParams.organization,
         groupName: inputs.adminGroup,
       });
 
-      if (groupExists) {
-        core.info(`Group ${inputs.adminGroup} exists. Setting admin permissions.`);
-        await api.setAdminPermissions({
-          project: project.key,
-          organization: createProjectParams.organization,
-          groupName: inputs.adminGroup,
-        });
-
-        core.notice(`Admin permissions granted to group: ${inputs.adminGroup}`);
-      } else {
-        core.warning(`Group ${inputs.adminGroup} does not exist. Skipping admin permissions.`);
-      }
+      core.notice(`Admin permissions granted to group: ${inputs.adminGroup}`);
     }
 
     core.setOutput(

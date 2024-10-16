@@ -13,8 +13,9 @@ export function getInputs(): ActionInputs {
   const organization = core.getInput(ActionInputKeys.organization);
   const projectName = core.getInput(ActionInputKeys.projectName);
   const mainBranch = core.getInput(ActionInputKeys.mainBranch);
+  const adminGroup = core.getInput(ActionInputKeys.adminGroup);
 
-  return { sonarToken, project, organization, projectName, mainBranch };
+  return { sonarToken, project, organization, projectName, mainBranch, adminGroup };
 }
 
 export function buildCreateProjectParams(
