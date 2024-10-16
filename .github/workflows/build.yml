@@ -5,24 +5,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.2.1
 
       - uses: ./.github/actions/setup-node
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Run linter
-        run: pnpm lint
+        run: npm run lint
 
       - name: Format source
-        run: pnpm format
+        run: npm run format
 
       - name: Run unit tests
-        run: pnpm test
+        run: npm run test
 
       - name: Run build
-        run: pnpm build
+        run: npm run build
 
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v9

@@ -40,6 +40,16 @@ export async function run() {
       });
     }
 
+    if (inputs.adminGroup) {
+      await api.setAdminPermissions({
+        project: project.key,
+        organization: createProjectParams.organization,
+        groupName: inputs.adminGroup,
+      });
+
+      core.notice(`Admin permissions granted to group: ${inputs.adminGroup}`);
+    }
+
     core.setOutput(
       ActionOutputKeys.organization,
       createProjectParams.organization

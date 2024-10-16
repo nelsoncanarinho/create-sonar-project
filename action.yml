@@ -1,9 +1,9 @@
-name: 'create-sonar-project'
+name: 'cicd-sonar-project'
 description: 'Create a project in SonarCloud using web api.'
 author: 'nelsoncanarinho'
 branding:
   icon: bar-chart-2
-  color: yellow
+  color: red
 inputs:
   SONAR_PROJECT_NAME:
     description: 'Sonar custom name for the project. Default is the repo name.'
@@ -20,11 +20,14 @@ inputs:
   SONAR_TOKEN:
     description: 'Sonar token used to integrate with SonarCloud api.'
     required: true
+  SONAR_PROJECT_ADMIN_GROUP:
+    description: 'Name of the default admin group of the project.'
+    required: false
 outputs:
   SONAR_ORGANIZATION:
     description: 'Sonar organization for the created project'
   SONAR_PROJECT_KEY:
     description: 'Sonar project key for the created project'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

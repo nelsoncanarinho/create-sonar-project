@@ -82,6 +82,9 @@ SONAR_DEFAULT_BRANCH:
 SONAR_TOKEN:
   description: 'Sonar token used to integrate with SonarCloud api.'
   required: true
+SONAR_PROJECT_ADMIN_GROUP:
+  description: 'Name of the default admin group of the project.'
+  required: false
 ```
 
 ## Action Outputs

@@ -1,4 +1,5 @@
 export interface ActionInputs {
+  adminGroup: string;
   sonarToken: string;
   project: string;
   organization: string;
@@ -12,6 +13,7 @@ export enum ActionInputKeys {
   organization = 'SONAR_ORGANIZATION',
   projectName = 'SONAR_PROJECT_NAME',
   mainBranch = 'SONAR_DEFAULT_BRANCH',
+  adminGroup = 'SONAR_PROJECT_ADMIN_GROUP',
 }
 
 export enum ActionOutputKeys {
