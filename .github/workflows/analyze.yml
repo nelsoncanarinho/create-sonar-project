@@ -2,7 +2,7 @@ on:
   workflow_call:
 
 jobs:
-  sonarcloud:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.2.1
@@ -11,13 +11,7 @@ jobs:
           fetch-depth: 0
 
       - uses: ./.github/actions/setup-node
-
-      - name: Create Project
-        id: createProject
-        uses: ./
-        with:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+      
       - name: Run tests
         run: |
           npm install && npm run test:coverage
